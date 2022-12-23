@@ -21,7 +21,18 @@ def get_option_chain_data(symbol):
 
     print("Getting data for " + symbol)
     print(url)
-    r = requests.get(url, headers=headers, timeout=60)
+    # Add exception handling
+    try:
+        r = requests.get(url, headers=headers, timeout=60)
+    except Exception as e:
+        print("Error: " + str(e))
+        return None
+
+    # Check if the response is 200
+    if r.status_code != 200:
+        print("Error: " + str(r.status_code))
+        return None
+
     data = r.json()
     return data
 
@@ -161,6 +172,10 @@ def store_data(df, symbol):
 def get_option_chain_data_for_list(symbols):
     for symbol in symbols:
         data = get_option_chain_data(symbol)
+
+        # Check if the data is None
+        if data is None:
+            continue
         df = parse_data(data, symbol)
         store_data(df, symbol)
         time.sleep(10)
