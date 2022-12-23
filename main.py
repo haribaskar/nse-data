@@ -162,10 +162,13 @@ def parse_data(data, symbol):
 
 # Function to store the data in a csv file
 def store_data(df, symbol):
-    if os.path.exists("option_chain_data.csv"):
-        df.to_csv("option_chain_data.csv", mode="a", header=False, index=False)
+    # add date to the file name
+    file_name = symbol + "_" + datetime.datetime.now().strftime("%Y-%m-%d") + ".csv"
+    # check if the file exists
+    if os.path.exists(file_name):
+        df.to_csv(file_name, mode="a", header=False, index=False)
     else:
-        df.to_csv("option_chain_data.csv", index=False)
+        df.to_csv(file_name, index=False)
 
 
 # Function to get the option chain data for a list of symbols

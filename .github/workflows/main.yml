@@ -6,9 +6,9 @@ on:
   pull_request:
     branches:
       - main
-  schedule:
-  # run every 2 minutes
-    - cron:  '*/2 * * * *'
+  # schedule:
+  # # run every 2 minutes
+  #   - cron:  '*/2 * * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
